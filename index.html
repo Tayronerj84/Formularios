@@ -3,136 +3,30 @@
 <head>
   <title>Formulário de Hotel</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #000000, #808080);
-      margin: 0;
-      padding: 20px;
-    }
-    
-    h1 {
-      text-align: left;
-      color: #ffffff;
-      margin-top: 0;
-      padding-left: 20px;
-    }
-    
-    p {
-      color: #ffffff;
-      font-size: 18px;
-      margin-top: 0;
-    }
-    
-    form {
-      max-width: 400px;
-      margin: 0;
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    
-    label {
-      display: block;
-      margin-bottom: 10px;
-      color: #000000;
-    }
-    
-    input[type="text"], input[type="email"], input[type="tel"] {
-      width: 100%;
-      padding: 10px;
-      border: 2px solid #cccccc;
-      border-radius: 10px;
-      box-sizing: border-box;
-      margin-bottom: 20px;
-    }
-    
-    input[type="submit"] {
-      background-color: #4CAF50;
-      color: #ffffff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
-    input[type="submit"]:hover {
-      background-color: #45a049;
+    .hidden {
+      display: none;
     }
   </style>
-  <script>
-    function formatarCNPJ(input) {
-      // Remove todos os caracteres não numéricos do valor
-      input.value = input.value.replace(/\D/g, '');
-    }
-    
-    function formatarNomeHotel(input) {
-      // Converte o valor para letras maiúsculas
-      input.value = input.value.toUpperCase();
-    }
-    
-    function formatarTelefone(input) {
-      // Remove todos os caracteres não numéricos do valor
-      input.value = input.value.replace(/\D/g, '');
-    }
-    
-    function enviarEmail() {
-      var nomeHotel = document.getElementById('nome-hotel').value;
-      var cnpjHotel = document.getElementById('cnpj-hotel').value;
-      var enderecoHotel = document.getElementById('endereco-hotel').value;
-      var redeHoteleira = document.getElementById('rede-hoteleira').value;
-      var responsavelGlobo = document.getElementById('responsavel-globo').value;
-      var emailContato = document.getElementById('email-contato').value;
-      var telefoneContato = document.getElementById('telefone-contato').value;
-      var cargo = document.getElementById('cargo').value;
-      
-      var assunto = 'Formulário de Hotel - ' + nomeHotel;
-      var corpo = 'Olá,\n\nO formulário do hotel ' + nomeHotel + ' foi preenchido com os seguintes dados:\n\n' +
-                  'Nome do Hotel: ' + nomeHotel + '\n' +
-                  'CNPJ do Hotel: ' + cnpjHotel + '\n' +
-                  'Endereço Completo: ' + enderecoHotel + '\n' +
-                  'Rede Hoteleira: ' + redeHoteleira + '\n' +
-                  'Nome do responsável comercial pelo atendimento Globo: ' + responsavelGlobo + '\n' +
-                  'E-mail de contato da pessoa acima: ' + emailContato + '\n' +
-                  'Telefone de contato: ' + telefoneContato + '\n' +
-                  'Cargo: ' + cargo + '\n\n' +
-                  'Por favor, entre em contato com a pessoa acima para dar continuidade ao processo.\n\n' +
-                  'Atenciosamente,\nEquipe do Hotel';
-                  
-      var mailtoLink = 'mailto:' + emailContato + '?subject=' + encodeURIComponent(assunto) + '&body=' + encodeURIComponent(corpo);
-      window.location.href = mailtoLink;
-    }
-  </script>
 </head>
 <body>
-  <h1>Tarifário Hoteleiro 2023</h1>
-  
-  <form>
-    <label for="nome-hotel">Nome do Hotel:</label>
-    <input type="text" id="nome-hotel" name="nome-hotel" required oninput="formatarNomeHotel(this)">
+  <form id="hotel-form">
+    <label for="hotel-name">Nome do Hotel:</label>
+    <input type="text" id="hotel-name" required>
 
-    <label for="cnpj-hotel">CNPJ do Hotel:</label>
-    <input type="text" id="cnpj-hotel" name="cnpj-hotel" pattern="[0-9]*" inputmode="numeric" required oninput="formatarCNPJ(this)">
-    
-    <label for="endereco-hotel">Endereço Completo:</label>
-    <input type="text" id="endereco-hotel" name="endereco-hotel" required>
-    
-    <label for="rede-hoteleira">Rede Hoteleira:</label>
-    <input type="text" id="rede-hoteleira" name="rede-hoteleira" required>
-    
-    <label for="responsavel-globo">Nome do responsável comercial pelo atendimento Globo:</label>
-    <input type="text" id="responsavel-globo" name="responsavel-globo" required>
-    
-    <label for="email-contato">E-mail de contato da pessoa acima:</label>
-    <input type="email" id="email-contato" name="email-contato" required>
-
-    <label for="telefone-contato">Telefone de contato:</label>
-    <input type="tel" id="telefone-contato" name="telefone-contato" pattern="[0-9]*" inputmode="numeric" required oninput="formatarTelefone(this)">
-    
-    <label for="cargo">Cargo:</label>
-    <input type="text" id="cargo" name="cargo" required>
-    
-    <input type="button" value="Enviar por E-mail" onclick="enviarEmail()">
+    <button id="submit-btn" class="hidden" type="submit">Enviar</button>
   </form>
+
+  <script>
+    const hotelNameInput = document.getElementById('hotel-name');
+    const submitButton = document.getElementById('submit-btn');
+
+    hotelNameInput.addEventListener('input', function() {
+      if (hotelNameInput.value.trim() !== '') {
+        submitButton.classList.remove('hidden');
+      } else {
+        submitButton.classList.add('hidden');
+      }
+    });
+  </script>
 </body>
 </html>

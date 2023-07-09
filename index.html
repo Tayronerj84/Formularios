@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulário de Hotel</title>
+  <style>
+    /* Estilos omitidos para brevidade */
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(to bottom, #000000, #666666);
+      color: #fff;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #333333;
+      padding: 60px;
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #555555;
+      color: #fff;
+    }
+
+    input[type="button"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="button"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <script>
+    // Funções omitidas para brevidade
+
+    function enviarEmail() {
+      var nomeHotel = document.getElementById('nome-hotel').value;
+      var cnpjHotel = document.getElementById('cnpj-hotel').value;
+      var enderecoHotel = document.getElementById('endereco-hotel').value;
+      var redeHoteleira = document.getElementById('rede-hoteleira').value;
+      var responsavelGlobo = document.getElementById('responsavel-globo').value;
+      var emailContato = document.getElementById('email-contato').value;
+      var telefoneContato = document.getElementById('telefone-contato').value;
+      var cargo = document.getElementById('cargo').value;
+      var plataforma = document.getElementById('plataforma').value;
+
+      // Verifica se todos os campos obrigatórios foram preenchidos
+      if (nomeHotel === '' || cnpjHotel === '' || enderecoHotel === '' ||
+          redeHoteleira === '' || responsavelGlobo === '' ||
+          emailContato === '' || telefoneContato === '' || cargo === '') {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+
+      var emailBody = 'Nome do Hotel: ' + nomeHotel + '%0D%0A' +
+                      'CNPJ do Hotel: ' + cnpjHotel + '%0D%0A' +
+                      'Endereço Completo: ' + enderecoHotel + '%0D%0A' +
+                      'Rede Hoteleira: ' + redeHoteleira + '%0D%0A' +
+                      'Nome do responsável comercial pelo atendimento Globo: ' + responsavelGlobo + '%0D%0A' +
+                      'E-mail de contato da pessoa acima: ' + emailContato + '%0D%0A' +
+                      'Telefone de contato: ' + telefoneContato + '%0D%0A' +
+                      'Cargo: ' + cargo + '%0D%0A' +
+                      'Informar o nome da plataforma: ' + plataforma;
+
+      var mailtoLink = 'mailto:tayrone.santos1120@gmail.com?subject=Formulário de Hotel&body=' + emailBody;
+
+      window.location.href = mailtoLink;
+    }
+
+    function formatarCNPJ(input) {
+      // Remove todos os caracteres que não sejam números
+      var cnpj = input.value.replace(/\D/g, '');
+
+      // Atualiza o valor do campo com o CNPJ formatado
+      input.value = cnpj;
+
+      // Valida se o CNPJ contém apenas números
+      if (!/^\d+$/.test(cnpj)) {
+        alert('O CNPJ deve conter apenas números.');
+        input.value = '';
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Tarifário Hoteleiro 2023</h1>
+  
+  <form autocomplete="off">
+    <h2>Dados do Hotel e Contato</h2>
+    
+    <label for="nome-hotel">Nome do Hotel:</label>
+    <input type="text" id="nome-hotel" name="nome-hotel" required oninput="formatarNomeHotel(this)">
+
+    <label for="cnpj-hotel">CNPJ do Hotel:</label>
+    <input type="text" id="cnpj-hotel" name="cnpj-hotel" pattern="[0-9]*" inputmode="numeric" required oninput="formatarCNPJ(this)">
+
+    <label for="endereco-hotel">Endereço Completo:</label>
+    <input type="text" id="endereco-hotel" name="endereco-hotel" required>
+
+    <label for="rede-hoteleira">Rede Hoteleira:</label>
+    <input type="text" id="rede-hoteleira" name="rede-hoteleira" required>
+
+    <label for="responsavel-globo">Nome do responsável comercial pelo atendimento Globo:</label>
+    <input type="text" id="responsavel-globo" name="responsavel-globo" required>
+
+    <label for="email-contato">E-mail de contato da pessoa acima:</label>
+    <input type="email" id="email-contato" name="email-contato" required>
+
+    <label for="telefone-contato">Telefone de contato:</label>
+    <input type="tel" id="telefone-contato" name="telefone-contato" pattern="[0-9]*" inputmode="numeric" required oninput="formatarTelefone(this)">
+
+    <label for="cargo">Cargo:</label>
+    <input type="text" id="cargo" name="cargo" required>
+    
+    <h2>Informações Sistêmicas</h2>
+
+    <label for="plataforma">Informar o nome da plataforma:</label>
+    <select id="plataforma" name="plataforma">
+      <option value=" "></option>
+      <option value="Booking">Booking</option>
+      <option value="Omnibees">Omnibees</option>
+      <option value="CMNet">CMNet</option>
+      <option value="B2B">B2B</option>
+
+    </select>
+
+    <input type="button" value="Enviar por E-mail" onclick="enviarEmail()">
+  </form>
+
+
